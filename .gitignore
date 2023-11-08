@@ -1,3 +1,9 @@
+# Directorys with images in datasets
+datasets/raw/
+datasets/PrivateTest/
+datasets/PublicTest/
+datasets/Training/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

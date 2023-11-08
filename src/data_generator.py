@@ -29,7 +29,7 @@ def data_loader(train_dir, valid_dir, test_dir, train_label, valid_label, test_l
         transforms.RandomRotation(40),
         transforms.ColorJitter(brightness=0.2, contrast=0.2, saturation=0.2, hue=0.2),
         transforms.ToTensor(),
-        transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
+        transforms.Normalize(mean=[0.5], std=[0.2]) #mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
     ])
 
     train_dataset = CustomDataset(dataframe=train_label, root_dir=train_dir, transform=transform)

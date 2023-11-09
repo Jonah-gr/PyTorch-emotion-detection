@@ -5,7 +5,7 @@ datasets/PublicTest/
 datasets/Training/
 
 # Model checkpoint
-src/model.pt/
+src/model.pt
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

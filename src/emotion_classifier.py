@@ -3,7 +3,6 @@ import torch.nn.functional as F
 import torch.optim as optim
 import numpy as np
 from device import DEVICE
-from data_downloading import data_download
 from label_and_dir import label_and_dir
 from data_generator import data_loader
 
@@ -42,7 +41,7 @@ class Network(nn.Module):
     def forward(self, x):
         return self.seq(x)
     
-    
+
 """
 class Down(nn.Module):
     def __init__(self, in_channels, out_channels):
@@ -206,30 +205,6 @@ if __name__ == "__main__":
 
     print(f"Network has {total_parameters} total parameters")
 
-    # Training loop for demonstration
-    optimizer = optim.Adam(net.parameters(), lr=0.001)
-    criterion = nn.CrossEntropyLoss()
-
-
     batch, labels = train_loader.__iter__().__next__()
     x = net(batch)
     print(x.shape)
-
-
-    """
-    for epoch in range(1):
-        for batch, labels in train_loader:
-            batch, labels = batch.to(DEVICE), labels.to(DEVICE)
-
-            optimizer.zero_grad()
-            outputs = net(batch)
-            loss = criterion(outputs, labels)
-            loss.backward()
-            optimizer.step()
-
-    # Testing the network with a batch from the dataloader
-    batch, labels = next(iter(test_loader))
-    batch, labels = batch.to(DEVICE), labels.to(DEVICE)
-    x = net(batch)
-    print(x.shape)
-    """

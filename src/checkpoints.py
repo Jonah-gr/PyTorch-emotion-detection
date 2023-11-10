@@ -71,3 +71,5 @@ if __name__ == "__main__":
 
     trainer = CheckpointTrainer(net, loss, "model.pt")
     trainer.train(train_loader, valid_loader)
+
+    # optimizer = optim.Adam(net.parameters(), lr=0.001)

@@ -148,7 +148,7 @@ class Network(nn.Module):
 
 
 
-
+"""
 class Down(nn.Module):
     def __init__(self, in_channels, out_channels):
         super(Down, self).__init__()
@@ -181,6 +181,43 @@ class Network(nn.Module):
 
     def forward(self, x):
         return self.seq(x)
+    
+"""
+
+
+class Down(nn.Module):
+    def __init__(self, in_channels, out_channels):
+        super(Down, self).__init__()
+        self.conv1 = nn.Conv2d(in_channels, out_channels, kernel_size=3, padding=1)
+        self.pool = nn.MaxPool2d(kernel_size=2, stride=2)
+        self.norm = nn.BatchNorm2d(out_channels)
+
+    def forward(self, x):
+        x = F.relu(self.norm(self.pool(self.conv1(x))))
+        return x
+
+class Network(nn.Module):
+    def __init__(self, num_classes=7):  # Assuming you have 7 emotion classes
+        super(Network, self).__init__()
+        self.seq = nn.Sequential(
+            Down(1, 32),
+            nn.Dropout2d(0.2),
+            Down(32, 64),
+            nn.Dropout2d(0.2),
+            Down(64, 128),
+            nn.Dropout2d(0.2),
+            Down(128, 256),
+            nn.Dropout2d(0.2),
+            nn.Flatten()
+        )
+        self.fc = nn.Linear(256 * 6 * 6, num_classes)  # Adjust based on the flattened size
+
+    def forward(self, x):
+        x = self.seq(x)
+        x = self.fc(x)
+        return x
+
+# Use this updated Network class when defining your model for emotion recognition to ensure the proper handling of the input shapes.
 
 
 

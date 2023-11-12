@@ -8,9 +8,9 @@ from data_generator import data_loader
 
 
 
-class Network(nn.Module):
+class Network_complex(nn.Module):
     def __init__(self, num_classes=7):
-        super(Network, self).__init__()
+        super(Network_complex, self).__init__()
         self.seq = nn.Sequential(
             nn.Conv2d(1, 64, kernel_size=3, padding=1), nn.ReLU(),
             nn.Conv2d(64, 64, kernel_size=3, padding=1), nn.ReLU(),
@@ -148,7 +148,7 @@ class Network(nn.Module):
 
 
 
-"""
+
 class Down(nn.Module):
     def __init__(self, in_channels, out_channels):
         super(Down, self).__init__()
@@ -181,7 +181,7 @@ class Network(nn.Module):
 
     def forward(self, x):
         return self.seq(x)
-"""
+
 
 
 

@@ -1,0 +1,9 @@
+numpy 
+pandas
+imageio
+torch 
+torchvision 
+torchaudio
+facenet_pytorch
+tqdm
+opencv-python

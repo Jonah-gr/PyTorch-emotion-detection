@@ -1,7 +1,4 @@
 import torch.nn as nn
-import torch.nn.functional as F
-import torch.optim as optim
-import numpy as np
 from device import DEVICE
 from label_and_dir import label_and_dir
 from data_generator import data_loader
@@ -80,15 +77,6 @@ class Network(nn.Module):
 
 
 if __name__ == "__main__":
-    """
-    #downloading data from Kaggle
-    # data_download()
-
-    #importing data
-    train_dir, valid_dir, test_dir, train_label, valid_label, test_label = label_and_dir()
-    train_generator, valid_generator, test_generator = data_loader(train_dir, valid_dir, test_dir, train_label, valid_label, test_label)
-    """
-
     # Assuming you have set up your data loaders and DEVICE
     train_dir, valid_dir, test_dir, train_label, valid_label, test_label = label_and_dir()
     # Assuming you have set up your data loaders and DEVICE

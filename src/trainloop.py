@@ -1,5 +1,4 @@
 import torch
-import numpy as np
 from tqdm import tqdm
 from device import DEVICE
 from label_and_dir import label_and_dir

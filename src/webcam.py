@@ -36,7 +36,7 @@ while True:
             # Draw a rectangle around the face
             cv2.rectangle(frame, (x1, y1), (x2, y2), (255, 0, 0), 2)
 
-            if face.size != 0:
+            if face.size == 1:
                 # Preprocess image for emotion recognition using the Network's forward pass
                 face = cv2.resize(face, (48, 48))
                 face = cv2.cvtColor(face, cv2.COLOR_BGR2GRAY)

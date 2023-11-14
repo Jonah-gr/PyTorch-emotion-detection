@@ -27,14 +27,10 @@ class Network(nn.Module):
             nn.Conv2d(512, 512, kernel_size=3, padding=1), nn.ReLU(),
             nn.Conv2d(512, 512, kernel_size=3, padding=1), nn.ReLU(),
             nn.MaxPool2d(kernel_size=2, stride=2),
-            # nn.Flatten(),
-            # nn.Linear(512 * 3 * 3, 4096), nn.ReLU(),  # 3x3 due to downsampling with MaxPool2d
-            # nn.Dropout(0.5),
-            # nn.Linear(4096, 4096), nn.ReLU(),
-            # nn.Dropout(0.5),
-            # nn.Linear(4096, num_classes)
             nn.Flatten(),
+            nn.Dropout(0.5),
             nn.Linear(512 * 3 * 3, 4096), nn.ReLU(),
+            nn.Dropout(0.5),
             nn.Linear(4096, num_classes),
             nn.Softmax(dim=1)
         )
@@ -77,7 +73,42 @@ class Network(nn.Module):
 
 # Use this updated Network class when defining your model for emotion recognition to ensure the proper handling of the input shapes.
 """
+class CaffeNet(nn.Module):
+    def __init__(self, num_classes=7):
+        super(CaffeNet, self).__init__()
+        self.features = nn.Sequential(
+            nn.Conv2d(1, 96, kernel_size=7, stride=2),
+            nn.ReLU(inplace=True),
+            nn.LocalResponseNorm(size=5, alpha=0.0005, beta=0.75),
+            nn.MaxPool2d(kernel_size=3, stride=3),
+            nn.Conv2d(96, 256, kernel_size=5, padding=2),
+            nn.ReLU(inplace=True),
+            nn.MaxPool2d(kernel_size=2, stride=2),
+            nn.Conv2d(256, 512, kernel_size=3, padding=1),
+            nn.ReLU(inplace=True),
+            nn.Conv2d(512, 512, kernel_size=3, padding=1),
+            nn.ReLU(inplace=True),
+            nn.Conv2d(512, 512, kernel_size=3, padding=1),
+            nn.ReLU(inplace=True),
+            nn.MaxPool2d(kernel_size=3, stride=3),
+        )
+        self.classifier = nn.Sequential(
+            nn.AdaptiveAvgPool2d((3, 3)),
+            nn.Flatten(),
+            nn.Linear(512 * 3 * 3, 4048),
+            nn.ReLU(inplace=True),
+            nn.Dropout(p=0.5),
+            nn.Linear(4048, 4048),
+            nn.ReLU(inplace=True),
+            nn.Dropout(p=0.5),
+            nn.Linear(4048, num_classes),
+            nn.Softmax(dim=1)
+        )
 
+    def forward(self, x):
+        x = self.features(x)
+        x = self.classifier(x)
+        return x
 
 
 if __name__ == "__main__":
@@ -86,7 +117,8 @@ if __name__ == "__main__":
     # Assuming you have set up your data loaders and DEVICE
     train_loader, valid_loader, test_loader = data_loader(train_dir, valid_dir, test_dir, train_label, valid_label, test_label)
 
-    net = Network().to(DEVICE)  # Set the appropriate number of classes
+    net = CaffeNet().to(DEVICE)  # Set the appropriate number of classes
+    # net = Network().to(DEVICE)
     total_parameters = sum(p.numel() for p in net.parameters() if p.requires_grad)
 
     print(f"Network has {total_parameters} total parameters")

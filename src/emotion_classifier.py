@@ -27,12 +27,16 @@ class Network(nn.Module):
             nn.Conv2d(512, 512, kernel_size=3, padding=1), nn.ReLU(),
             nn.Conv2d(512, 512, kernel_size=3, padding=1), nn.ReLU(),
             nn.MaxPool2d(kernel_size=2, stride=2),
+            # nn.Flatten(),
+            # nn.Linear(512 * 3 * 3, 4096), nn.ReLU(),  # 3x3 due to downsampling with MaxPool2d
+            # nn.Dropout(0.5),
+            # nn.Linear(4096, 4096), nn.ReLU(),
+            # nn.Dropout(0.5),
+            # nn.Linear(4096, num_classes)
             nn.Flatten(),
-            nn.Linear(512 * 3 * 3, 4096), nn.ReLU(),  # 3x3 due to downsampling with MaxPool2d
-            nn.Dropout(0.5),
-            nn.Linear(4096, 4096), nn.ReLU(),
-            nn.Dropout(0.5),
-            nn.Linear(4096, num_classes)
+            nn.Linear(512 * 3 * 3, 4096), nn.ReLU(),
+            nn.Linear(4096, num_classes),
+            nn.Softmax(dim=1)
         )
 
     def forward(self, x):

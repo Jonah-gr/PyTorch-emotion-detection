@@ -8,8 +8,7 @@ from emotion_classifier import Network
 mtcnn = MTCNN(keep_all=True)
 
 # Load the emotion recognition model
-model = torch.load('model.pt') 
-model_checkpoint = torch.load('model.pt')
+model_checkpoint = torch.load('model.pt', map_location=torch.device('cpu'))
 model = Network()  # Initialize your model here
 model.load_state_dict(model_checkpoint['net_state_dict'])
 model.eval() 

@@ -27,26 +27,25 @@ while True:
     # Detect faces in the image
     boxes, _ = mtcnn.detect(frame)
     if boxes is not None:
-        for box in boxes:
-            box = [int(b) for b in box]
-            x1, y1, x2, y2 = box
-            face = frame[y1:y2, x1:x2]
+        box = [int(b) for b in boxes[0]]
+        x1, y1, x2, y2 = box
+        face = frame[y1:y2, x1:x2]
 
-            # Draw a rectangle around the face
-            cv2.rectangle(frame, (x1, y1), (x2, y2), (255, 0, 0), 2)
+        # Draw a rectangle around the face
+        cv2.rectangle(frame, (x1, y1), (x2, y2), (255, 0, 0), 2)
 
-            if face.size != 0:
-                # Preprocess image for emotion recognition using the Network's forward pass
-                face = cv2.resize(face, (96, 96)) #(48, 48))
-                face = cv2.cvtColor(face, cv2.COLOR_BGR2GRAY)
-                face = np.expand_dims(face, axis=0)
-                face = np.expand_dims(face, axis=0)
-                face = torch.tensor(face, dtype=torch.float32)
+        if face.size != 0:
+            # Preprocess image for emotion recognition using the Network's forward pass
+            face = cv2.resize(face, (96, 96)) #(48, 48))
+            face = cv2.cvtColor(face, cv2.COLOR_BGR2GRAY)
+            face = np.expand_dims(face, axis=0)
+            face = np.expand_dims(face, axis=0)
+            face = torch.tensor(face, dtype=torch.float32)
 
-                # Get emotion prediction
-                output = model(face)
-                output = torch.argmax(output, dim=1).item()
-                cv2.putText(frame, emotion_dict[output], (x1 + 20, y1 - 60), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2, cv2.LINE_AA)
+            # Get emotion prediction
+            output = model(face)
+            output = torch.argmax(output, dim=1).item()
+            cv2.putText(frame, emotion_dict[output], (x1 + 20, y1 - 60), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2, cv2.LINE_AA)
 
 
     cv2.imshow('Video', frame)

@@ -2,7 +2,7 @@ from facenet_pytorch import MTCNN
 import cv2
 import numpy as np
 import torch
-from emotion_classifier import Network
+from models import Network
 
 # Load the MTCNN for face detection
 mtcnn = MTCNN(keep_all=True)

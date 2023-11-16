@@ -15,7 +15,7 @@ class Trainer:
     self.init_scheduler()
 
   def init_optimizer(self):
-    self.optim = torch.optim.Adam(self.network.parameters(), lr=0.0001)
+    self.optim = torch.optim.SGD(self.network.parameters(), lr=0.0001)
     
 
   def init_scheduler(self):

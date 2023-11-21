@@ -4,8 +4,9 @@ Welcome to the PyTorch Emotion Tracker repository! This project focuses on real-
 
 ## Getting Started
 
-1. **Installation:** Install the required libraries using `pip install -r REQUIREMENTS.txt`.
-2. **Running the Emotion Detector:** 
+1. **Clone the repository:** Clone this repository using `git clone https://github.com/Jonah-gr/PyTorch-emotion-detection.git`
+2. **Installation:** Install the required libraries using `pip install -r REQUIREMENTS.txt`.
+3. **Running the Emotion Detector:** 
    - Download [model.pt](https://drive.google.com/file/d/1rWWL2FqNzGQZwKn5WI1_wZFi53loRBVf/view?usp=drive_link)
    - Move `model.pt` to `../src/`
    - Execute `webcam.py` to start real-time emotion detection.

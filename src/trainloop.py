@@ -15,11 +15,11 @@ class Trainer:
     self.init_scheduler()
 
   def init_optimizer(self):
-    self.optim = torch.optim.Adam(self.network.parameters(), lr=0.0001)
+    self.optim = torch.optim.SGD(self.network.parameters(), lr=0.0001)
     
 
   def init_scheduler(self):
-    self.scheduler = torch.optim.lr_scheduler.ExponentialLR(self.optim, 0.95)
+    self.scheduler = torch.optim.lr_scheduler.ExponentialLR(self.optim, 0.95) # torch.optim.lr_scheduler.StepLR(optimizer, step_size=30, gamma=0.1)
 
   def report_top_loss(self, top_loss_samples, epoch):
     return None

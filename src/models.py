@@ -1,4 +1,5 @@
 import torch.nn as nn
+import torch.nn.functional as F
 from device import DEVICE
 from label_and_dir import label_and_dir
 from data_generator import data_loader
@@ -114,13 +115,96 @@ class CaffeNet(nn.Module):
 
 
 
+class VGGFaceVGG16(nn.Module):
+    def __init__(self, include_top=True, classes=7):
+        super(VGGFaceVGG16, self).__init__()
+        self.include_top = include_top
+
+        # Block 1
+        self.conv1_1 = nn.Conv2d(1, 64, kernel_size=3, padding=1)
+        self.conv1_2 = nn.Conv2d(64, 64, kernel_size=3, padding=1)
+        self.pool1 = nn.MaxPool2d(kernel_size=2, stride=2)
+
+        # Block 2
+        self.conv2_1 = nn.Conv2d(64, 128, kernel_size=3, padding=1)
+        self.conv2_2 = nn.Conv2d(128, 128, kernel_size=3, padding=1)
+        self.pool2 = nn.MaxPool2d(kernel_size=2, stride=2)
+
+        # Block 3
+        self.conv3_1 = nn.Conv2d(128, 256, kernel_size=3, padding=1)
+        self.conv3_2 = nn.Conv2d(256, 256, kernel_size=3, padding=1)
+        self.conv3_3 = nn.Conv2d(256, 256, kernel_size=3, padding=1)
+        self.pool3 = nn.MaxPool2d(kernel_size=2, stride=2)
+
+        # Block 4
+        self.conv4_1 = nn.Conv2d(256, 512, kernel_size=3, padding=1)
+        self.conv4_2 = nn.Conv2d(512, 512, kernel_size=3, padding=1)
+        self.conv4_3 = nn.Conv2d(512, 512, kernel_size=3, padding=1)
+        self.pool4 = nn.MaxPool2d(kernel_size=2, stride=2)
+
+        # Block 5
+        self.conv5_1 = nn.Conv2d(512, 512, kernel_size=3, padding=1)
+        self.conv5_2 = nn.Conv2d(512, 512, kernel_size=3, padding=1)
+        self.conv5_3 = nn.Conv2d(512, 512, kernel_size=3, padding=1)
+        self.pool5 = nn.MaxPool2d(kernel_size=2, stride=2)
+
+        self.fc7 = nn.Linear(512 * 6 * 6, 1024)
+        self.fc8 = nn.Linear(1024, classes)
+
+        if include_top:
+            # Classification block
+            self.fc6 = nn.Linear(512 * 6 * 6, 4096)
+            self.fc7 = nn.Linear(4096, 4096)
+            self.fc8 = nn.Linear(4096, classes)
+
+    def forward(self, x):
+        # Block 1
+        x = F.relu(self.conv1_1(x))
+        x = F.relu(self.conv1_2(x))
+        x = self.pool1(x)
+
+        # Block 2
+        x = F.relu(self.conv2_1(x))
+        x = F.relu(self.conv2_2(x))
+        x = self.pool2(x)
+
+        # Block 3
+        x = F.relu(self.conv3_1(x))
+        x = F.relu(self.conv3_2(x))
+        x = F.relu(self.conv3_3(x))
+        x = self.pool3(x)
+
+        # Block 4
+        x = F.relu(self.conv4_1(x))
+        x = F.relu(self.conv4_2(x))
+        x = F.relu(self.conv4_3(x))
+        x = self.pool4(x)
+
+        # Block 5
+        x = F.relu(self.conv5_1(x))
+        x = F.relu(self.conv5_2(x))
+        x = F.relu(self.conv5_3(x))
+        x = self.pool5(x)
+
+        if self.include_top:
+            # Classification block
+            x = x.view(x.size(0), -1)  # Flatten
+            x = F.relu(self.fc6(x))
+            x = F.relu(self.fc7(x))
+            x = self.fc8(x)
+
+        return x
+
+
+
+
 if __name__ == "__main__":
     # Assuming you have set up your data loaders and DEVICE
     train_dir, valid_dir, test_dir, train_label, valid_label, test_label = label_and_dir()
     # Assuming you have set up your data loaders and DEVICE
     train_loader, valid_loader, test_loader = data_loader(train_dir, valid_dir, test_dir, train_label, valid_label, test_label)
 
-    net = CaffeNet().to(DEVICE)  # Set the appropriate number of classes
+    net = VGGFaceVGG16(include_top=False).to(DEVICE)  # Set the appropriate number of classes
     # net = Network().to(DEVICE)
     total_parameters = sum(p.numel() for p in net.parameters() if p.requires_grad)
 

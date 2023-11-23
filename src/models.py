@@ -116,7 +116,7 @@ class CaffeNet(nn.Module):
 
 
 class Network(nn.Module):
-    def __init__(self, include_top=True, classes=7):
+    def __init__(self, include_top=False, classes=7):
         super(Network, self).__init__()
         self.include_top = include_top
 
@@ -212,7 +212,7 @@ if __name__ == "__main__":
     # Assuming you have set up your data loaders and DEVICE
     train_loader, valid_loader, test_loader = data_loader(train_dir, valid_dir, test_dir, train_label, valid_label, test_label)
 
-    net = Network(include_top=False).to(DEVICE)  # Set the appropriate number of classes
+    net = Network().to(DEVICE)  # Set the appropriate number of classes
     # net = Network().to(DEVICE)
     total_parameters = sum(p.numel() for p in net.parameters() if p.requires_grad)
 

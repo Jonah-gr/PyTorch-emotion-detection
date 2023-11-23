@@ -6,9 +6,9 @@ from data_generator import data_loader
 
 
 
-class Network(nn.Module):
+class OLD_Network(nn.Module):
     def __init__(self, num_classes=7):
-        super(Network, self).__init__()
+        super(OLD_Network, self).__init__()
         self.seq = nn.Sequential(
             nn.Conv2d(1, 64, kernel_size=3, padding=1), nn.ReLU(),
             nn.Conv2d(64, 64, kernel_size=3, padding=1), nn.ReLU(),
@@ -115,9 +115,9 @@ class CaffeNet(nn.Module):
 
 
 
-class VGGFaceVGG16(nn.Module):
+class Network(nn.Module):
     def __init__(self, include_top=True, classes=7):
-        super(VGGFaceVGG16, self).__init__()
+        super(Network, self).__init__()
         self.include_top = include_top
 
         # Block 1
@@ -148,8 +148,10 @@ class VGGFaceVGG16(nn.Module):
         self.conv5_3 = nn.Conv2d(512, 512, kernel_size=3, padding=1)
         self.pool5 = nn.MaxPool2d(kernel_size=2, stride=2)
 
-        self.fc7 = nn.Linear(512 * 6 * 6, 1024)
-        self.fc8 = nn.Linear(1024, classes)
+        self.fc7 = nn.Linear(512 * 3 * 3, 4096)
+        self.fc9 = nn.Linear(4096, 4096)
+        self.fc8 = nn.Linear(4096, classes)
+        nn.Softmax(dim=1)
 
         if include_top:
             # Classification block
@@ -186,6 +188,12 @@ class VGGFaceVGG16(nn.Module):
         x = F.relu(self.conv5_3(x))
         x = self.pool5(x)
 
+        x = x.view(x.size(0), -1)
+        x = F.relu(self.fc7(x))
+        x = F.relu(self.fc9(x))
+        x = self.fc8(x)
+        
+
         if self.include_top:
             # Classification block
             x = x.view(x.size(0), -1)  # Flatten
@@ -204,12 +212,14 @@ if __name__ == "__main__":
     # Assuming you have set up your data loaders and DEVICE
     train_loader, valid_loader, test_loader = data_loader(train_dir, valid_dir, test_dir, train_label, valid_label, test_label)
 
-    net = VGGFaceVGG16(include_top=False).to(DEVICE)  # Set the appropriate number of classes
+    net = Network(include_top=False).to(DEVICE)  # Set the appropriate number of classes
     # net = Network().to(DEVICE)
     total_parameters = sum(p.numel() for p in net.parameters() if p.requires_grad)
 
     print(f"Network has {total_parameters} total parameters")
 
     batch, labels = train_loader.__iter__().__next__()
+    batch, labels = batch.to(DEVICE), labels.to(DEVICE)
+
     x = net(batch)
     print(x.shape)

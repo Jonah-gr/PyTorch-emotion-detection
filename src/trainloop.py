@@ -15,7 +15,7 @@ class Trainer:
     self.init_scheduler()
 
   def init_optimizer(self):
-    self.optim = torch.optim.SGD(self.network.parameters(), lr=0.0001)
+    self.optim = torch.optim.Adam(self.network.parameters(), lr=0.0001)
     
 
   def init_scheduler(self):
@@ -102,7 +102,7 @@ if __name__ == "__main__":
     train_loader, valid_loader, test_loader = data_loader(train_dir, valid_dir, test_dir, train_label, valid_label, test_label)
 
     net = Network().to(DEVICE)  # Set the appropriate number of classes
-    loss = torch.nn.CrossEntropyLoss(reduction="none")
+    loss = torch.nn.CrossEntropyLoss() # reduction="none")
 
     trainer = Trainer(net, loss)
     trainer.epoch(train_loader, net, True)

@@ -116,9 +116,8 @@ class CaffeNet(nn.Module):
 
 
 class Network(nn.Module):
-    def __init__(self, include_top=False, classes=7):
+    def __init__(self, classes=7):
         super(Network, self).__init__()
-        self.include_top = include_top
 
         # Block 1
         self.conv1_1 = nn.Conv2d(1, 64, kernel_size=3, padding=1)
@@ -148,16 +147,10 @@ class Network(nn.Module):
         self.conv5_3 = nn.Conv2d(512, 512, kernel_size=3, padding=1)
         self.pool5 = nn.MaxPool2d(kernel_size=2, stride=2)
 
-        self.fc7 = nn.Linear(512 * 3 * 3, 4096)
-        self.fc9 = nn.Linear(4096, 4096)
-        self.fc8 = nn.Linear(4096, classes)
+        self.fc7 = nn.Linear(512 * 3 * 3, 1024)
+        self.fc8 = nn.Linear(1024, classes)
         nn.Softmax(dim=1)
 
-        if include_top:
-            # Classification block
-            self.fc6 = nn.Linear(512 * 6 * 6, 4096)
-            self.fc7 = nn.Linear(4096, 4096)
-            self.fc8 = nn.Linear(4096, classes)
 
     def forward(self, x):
         # Block 1
@@ -190,16 +183,7 @@ class Network(nn.Module):
 
         x = x.view(x.size(0), -1)
         x = F.relu(self.fc7(x))
-        x = F.relu(self.fc9(x))
         x = self.fc8(x)
-        
-
-        if self.include_top:
-            # Classification block
-            x = x.view(x.size(0), -1)  # Flatten
-            x = F.relu(self.fc6(x))
-            x = F.relu(self.fc7(x))
-            x = self.fc8(x)
 
         return x
 

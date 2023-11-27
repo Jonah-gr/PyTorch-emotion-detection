@@ -7,11 +7,9 @@ Welcome to the PyTorch Emotion Tracker repository! This project focuses on real-
 1. **Clone the repository:** Clone this repository using `git clone https://github.com/Jonah-gr/PyTorch-emotion-detection.git`
 2. **Installation:** Install the required libraries using `pip install -r REQUIREMENTS.txt`.
 3. **Running the Emotion Detector:** 
-   - Download [model.pt](https://drive.google.com/file/d/1rWWL2FqNzGQZwKn5WI1_wZFi53loRBVf/view?usp=drive_link)
+   - Download [model.pt](https://1drv.ms/u/s!AtugCP0Mx48phOwKPvDIkmIC81-6oA?e=47oA9N)
    - Move `model.pt` to `../src/`
    - Execute `webcam.py` to start real-time emotion detection.
-
-I still develop the model and train it on a GPU. I tried several networks but the results are still not satisfactory.
 
 4. **Training a New Model:**
    - Download 'fer2013.tar.gz' from [this Kaggle link](https://www.kaggle.com/c/challenges-in-representation-learning-facial-expression-recognition-challenge/data?select=fer2013.tar.gz).

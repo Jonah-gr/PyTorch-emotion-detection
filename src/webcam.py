@@ -3,12 +3,13 @@ import cv2
 import numpy as np
 import torch
 from models import Network
+from device import DEVICE
 
 # Load the MTCNN for face detection
 mtcnn = MTCNN(keep_all=True)
 
 # Load the emotion recognition model
-model_checkpoint = torch.load('model.pt', map_location=torch.device('cpu'))
+model_checkpoint = torch.load('model.pt', map_location=torch.device(DEVICE))
 model = Network()  # Initialize your model here
 model.load_state_dict(model_checkpoint['net_state_dict'])
 model.eval() 
@@ -36,7 +37,7 @@ while True:
 
         if face.size != 0:
             # Preprocess image for emotion recognition using the Network's forward pass
-            face = cv2.resize(face, (96, 96)) #(48, 48))
+            face = cv2.resize(face, (96, 96))
             face = cv2.cvtColor(face, cv2.COLOR_BGR2GRAY)
             face = np.expand_dims(face, axis=0)
             face = np.expand_dims(face, axis=0)

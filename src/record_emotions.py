@@ -58,7 +58,6 @@ class Emotion_Recorder():
             face = frame[y1:y2, x1:x2]
 
             if face.size != 0:
-                # Preprocess image for emotion recognition using the Network's forward pass
                 face = cv2.resize(face, (96, 96))
                 face = cv2.cvtColor(face, cv2.COLOR_BGR2GRAY)
                 face = np.expand_dims(face, axis=0)
@@ -108,7 +107,7 @@ class Emotion_Recorder():
 
 
 if __name__ == "__main__":
-    r = Emotion_Recorder(show_webcam=True)
+    r = Emotion_Recorder()
     r.start_recording()
 
         

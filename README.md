@@ -15,7 +15,7 @@ Welcome to the PyTorch Emotion Tracker repository! This project focuses on real-
    - Download 'fer2013.tar.gz' from [this Kaggle link](https://www.kaggle.com/c/challenges-in-representation-learning-facial-expression-recognition-challenge/data?select=fer2013.tar.gz).
    - Move the downloaded file to `../datasets/raw/` in this repository.
    - Untar the file: `tar -xzf fer2013.tar`.
-   - Modify the Network class in 'emotion_classifier.py' as needed.
+   - Modify the Network class in 'model.py' as needed.
    - Run 'checkpoints.py' to train the modified model.
 
 ## Acknowledgments

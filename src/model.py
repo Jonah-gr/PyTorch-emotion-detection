@@ -81,13 +81,10 @@ class Network(nn.Module):
 
 
 if __name__ == "__main__":
-    # Assuming you have set up your data loaders and DEVICE
     train_dir, valid_dir, test_dir, train_label, valid_label, test_label = label_and_dir()
-    # Assuming you have set up your data loaders and DEVICE
     train_loader, valid_loader, test_loader = data_loader(train_dir, valid_dir, test_dir, train_label, valid_label, test_label)
 
-    net = Network().to(DEVICE)  # Set the appropriate number of classes
-    # net = Network().to(DEVICE)
+    net = Network().to(DEVICE)
     total_parameters = sum(p.numel() for p in net.parameters() if p.requires_grad)
 
     print(f"Network has {total_parameters} total parameters")

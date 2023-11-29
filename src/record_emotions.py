@@ -4,7 +4,7 @@ import cv2
 import time
 import numpy as np
 import torch
-from models import Network
+from model import Network
 from device import DEVICE
 import os
 os.environ["KMP_DUPLICATE_LIB_OK"]="TRUE"

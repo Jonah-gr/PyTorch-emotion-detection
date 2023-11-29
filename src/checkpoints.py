@@ -1,7 +1,7 @@
 import torch
 from device import DEVICE
 import json
-from models import Network
+from model import Network
 from trainloop import Trainer
 from label_and_dir import label_and_dir
 from data_generator import data_loader

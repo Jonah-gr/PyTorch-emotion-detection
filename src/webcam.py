@@ -2,7 +2,7 @@ from facenet_pytorch import MTCNN
 import cv2
 import numpy as np
 import torch
-from models import Network
+from model import Network
 from device import DEVICE
 
 # Load the MTCNN for face detection

@@ -3,7 +3,7 @@ from tqdm import tqdm
 from device import DEVICE
 from label_and_dir import label_and_dir
 from data_generator import data_loader
-from models import Network
+from model import Network
 
 
 class Trainer:

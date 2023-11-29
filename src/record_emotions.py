@@ -33,7 +33,6 @@ class Emotion_Recorder():
     def initialize_plot(self):
         plt.ion()
         plt.show()
-        self.x = []
         self.y = []
         plt.title("Real-time Emotion Plot")
     

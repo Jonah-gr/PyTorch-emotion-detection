@@ -32,12 +32,10 @@ class Emotion_Recorder():
 
     def initialize_plot(self):
         plt.ion()
-        self.fig, self.ax = plt.subplots()
-        self.emotion_data = {'x': [], 'y': []}
-        self.line, = self.ax.plot([], [], marker='o', linestyle='-', color='b')
-        self.ax.set_xlabel('Real-time')
-        self.ax.set_ylabel('Detected Emotion')
-        self.ax.set_title('Real-time Emotion Plot')
+        plt.show()
+        self.x = []
+        self.y = []
+        plt.title("Real-time Emotion Plot")
     
     def initialize(self):
         self.initialize_model()
@@ -71,13 +69,14 @@ class Emotion_Recorder():
         return emotion
     
     def plot_emotion(self, emotion):
-        self.emotion_data['x'].append(len(self.emotion_data['x']))
-        self.emotion_data['y'].append(emotion)
-        self.line.set_xdata(self.emotion_data['x'])
-        self.line.set_ydata(self.emotion_data['y'])
-        self.ax.relim()
-        self.ax.autoscale_view()
-        self.fig.canvas.flush_events()
+        plt.clf()
+        self.y.append(emotion)
+        self.x = (np.arange(len(self.y)))
+        plt.yticks(list(emotion_dict.keys()), list(emotion_dict.values()))
+        plt.plot(self.x, self.y)
+        plt.xlabel('Real-time')
+        plt.ylabel('Detected Emotion')
+        plt.autoscale()
 
     def start_recording(self):
         self.initialize()

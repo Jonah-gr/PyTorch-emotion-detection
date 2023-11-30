@@ -14,7 +14,7 @@ emotion_dict = {0: "Angry", 1: "Disgust", 2: "Fear", 3: "Happy", 4: "Sad", 5: "S
 
 
 class Emotion_Recorder():
-    def __init__(self,cam=1 , FPS=10, model=Network(), checkpoint_path="model.pt", show_webcam=False):
+    def __init__(self,cam=1 , FPS=60, model=Network(), checkpoint_path="model.pt", show_webcam=False):
         self.cam = cam
         self.fps = FPS
         self.model = model
@@ -101,11 +101,8 @@ class Emotion_Recorder():
 
 
 
-
-
-
 if __name__ == "__main__":
-    r = Emotion_Recorder()
+    r = Emotion_Recorder(show_webcam=True)
     r.start_recording()
 
         

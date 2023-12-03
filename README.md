@@ -1,6 +1,6 @@
-# PyTorch Emotion Tracker
+# PyTorch Emotion Detection
 
-Welcome to the PyTorch Emotion Tracker repository! This project focuses on real-time emotion detection using PyTorch and is equipped with tools to train new models.
+Welcome to the PyTorch Emotion Detection repository! This project focuses on real-time emotion detection using PyTorch and is equipped with tools to train new models.
 
 ## Getting Started
 

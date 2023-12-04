@@ -96,13 +96,11 @@ class Trainer:
     return 1000.0 * total_loss / cnt, 100.0*correct/cnt
 
 if __name__ == "__main__":
-    # Assuming you have set up your data loaders and DEVICE
     train_dir, valid_dir, test_dir, train_label, valid_label, test_label = label_and_dir()
-    # Assuming you have set up your data loaders and DEVICE
     train_loader, valid_loader, test_loader = data_loader(train_dir, valid_dir, test_dir, train_label, valid_label, test_label)
 
-    net = Network().to(DEVICE)  # Set the appropriate number of classes
-    loss = torch.nn.CrossEntropyLoss() # reduction="none")
+    net = Network().to(DEVICE)
+    loss = torch.nn.CrossEntropyLoss()
 
     trainer = Trainer(net, loss)
     trainer.epoch(train_loader, net, True)

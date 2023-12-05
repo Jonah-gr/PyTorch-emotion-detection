@@ -11,6 +11,7 @@ Welcome to the PyTorch Emotion Detection repository! This project focuses on rea
    - Move `model.pt` to `../src/`.
    - Execute `webcam.py` to start real-time emotion detection\
       **OR** execute `record_emotions.py` to see your webcam and a live plot of the detected emotions.
+   **Attention:** You may need to change the selected webcam from 1 to 0, e.g. by initialising the `Emotion_Recorder()` by using `Emotion_Recorder(0)`.
 
 
 4. **Training a New Model:**

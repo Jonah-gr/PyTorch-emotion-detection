@@ -9,3 +9,4 @@ tqdm
 opencv-python
 matplotlib
 pytest
+ruff

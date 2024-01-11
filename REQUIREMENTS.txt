@@ -8,3 +8,4 @@ facenet-pytorch
 tqdm
 opencv-python
 matplotlib
+pytest

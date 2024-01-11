@@ -20,7 +20,7 @@ class CheckpointTrainer(Trainer):
           self.scheduler.load_state_dict(chkpt["scheduler_state_dict"])
           self.best_val_acc = chkpt["best_val_acc"]
           self.ep = chkpt["epoch"]
-      except:
+      except Exception:
           print("Could not find checkpoint, starting from scratch")
 
 

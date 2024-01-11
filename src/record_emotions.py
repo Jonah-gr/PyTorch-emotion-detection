@@ -83,7 +83,7 @@ class Emotion_Recorder():
             frame = self.get_frame()
             try:
                 face, box = self.detect_face(frame)
-            except:
+            except Exception:
                 continue
             if face is not None:
                 emotion = self.detect_emotion(face)

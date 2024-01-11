@@ -20,7 +20,7 @@ def data_download():
     #predictor = dlib.shape_predictor('shape_predictor_68_face_landmarks.dat')
     original_labels = [0, 1, 2, 3, 4, 5, 6]
     new_labels = list(set(original_labels) & set(SELECTED_LABELS))
-    nb_images_per_label = list(np.zeros(len(new_labels), 'uint8'))
+    #nb_images_per_label = list(np.zeros(len(new_labels), 'uint8'))
     try:
         os.makedirs(OUTPUT_FOLDER_NAME)
     except OSError as e:
@@ -53,10 +53,10 @@ def data_download():
         
         # get images and extract features
         images = []
-        labels_list = []
-        landmarks = []
-        hog_features = []
-        hog_images = []
+        #labels_list = []
+        #landmarks = []
+        #hog_features = []
+        #hog_images = []
         for i in range(len(samples)):
             try:
                 if labels[i] in SELECTED_LABELS: 

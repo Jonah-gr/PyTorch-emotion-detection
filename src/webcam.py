@@ -46,7 +46,7 @@ while True:
             # Get emotion prediction
             output = model(face)
             output = torch.argmax(output, dim=1).item()
-            cv2.putText(frame, emotion_dict[output], (x1 + 20, y1 - 60), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2, cv2.LINE_AA)
+            cv2.putText(frame, emotion_dict[output], (x1 + 20, y1 - 60), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 50), 2, cv2.LINE_AA)
 
 
     cv2.imshow('Video', frame)
